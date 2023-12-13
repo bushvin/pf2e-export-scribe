@@ -1,4 +1,4 @@
-name: "Bushvin's PF2e Extension"
+name: "Foundry VTT Pf2e module"
 on:
   push:
     tags:
