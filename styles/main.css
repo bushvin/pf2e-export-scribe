@@ -1,3 +1,10 @@
+#pf2e-export-scribe-dialog {
+    height: 100%;
+}
+#pf2e-export-scribe-features {
+    height: 100%;
+    width: 100%;
+}
 #pf2e-export-scribe-clipboard {
     display: block;
     position: absolute;

@@ -1,9 +1,20 @@
 # Export resources to scribe.pf2.tools markdown
 
-![Version](https://img.shields.io/github/v/tag/arcanistzed/pdf-sheet?label=Version&style=flat-square&color=2577a1) ![Latest Release Download Count](https://img.shields.io/github/downloads/arcanistzed/pdf-sheet/latest/module.zip?label=Downloads&style=flat-square&color=9b43a8) ![Supported Foundry Versions](https://img.shields.io/endpoint?url=https://foundryshields.com/version?url=https://raw.githubusercontent.com/arcanistzed/pdf-sheet/main/module.json&style=flat-square&color=ff6400) [![Discord Server](https://img.shields.io/badge/-Discord-%232c2f33?style=flat-square&logo=discord)](https://discord.gg/AAkZWWqVav) [![Patreon](https://img.shields.io/badge/-Patreon-%23141518?style=flat-square&logo=patreon)](https://www.patreon.com/bePatron?u=15896855)
+![badge_version] ![badge_issues] ![badge_downloads]
+
+![badge_fvtt_versions]
+
+![badge_mastodon]
 
 This module converts actor related information to the markdown language used at [https://scribe.pf2.tools/](https://scribe.pf2.tools/)
 
 ## Change notes
 
 See [CHANGELOG.md](CHANGELOG.md)
+
+
+[badge_version]: https://img.shields.io/github/v/tag/bushvin/pf2e-export-scribe?label=Version&style=flat-square&color=2577a1
+[badge_issues]: https://img.shields.io/github/issues/bushvin/pf2e-export-scribe?style=flat-square
+[badge_downloads]: https://img.shields.io/github/downloads/bushvin/pf2e-export-scribe/pf2e-export-scribe.zip?label=Downloads&style=flat-square&color=9b43a8
+[badge_fvtt_versions]: https://img.shields.io/endpoint?url=https://foundryshields.com/version?url=https://github.com/bushvin/pf2e-export-scribe/releases/latest/download/module.json&style=flat-square&color=ff6400
+[badge_mastodon]: https://img.shields.io/mastodon/follow/1084764?domain=https%3A%2F%2Fmastodon.social&logo=mastodon&logoColor=white&style=flat-square&label=%40bushvin%40mastodon.social
