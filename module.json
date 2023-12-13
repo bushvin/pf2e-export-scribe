@@ -38,6 +38,18 @@
             "path": "languages/en.json"
         }
     ],
+    "relationships": {
+        "systems": [
+          {
+            "id": "pf2e",
+            "type": "system",
+            "manifest": "https://github.com/foundryvtt/pf2e/releases/latest/download/system.json",
+            "compatibility": {
+              "minimum": "5.9.0"
+            }
+          }
+        ]
+    },
     "manifest": "This is auto replaced",
     "download": "This is auto replaced",
     "manifestPlusVersion": "1.2.0",
