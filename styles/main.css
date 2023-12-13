@@ -1,0 +1,15 @@
+#pf2e-export-scribe-clipboard {
+    display: block;
+    position: absolute;
+    height: 40px;
+    width: 40px;
+    border-radius: 100px;
+    right: 20px;
+    bottom: 20px;
+    border: 1px solid;
+    background-image: url(/ui/parchment.jpg);
+  }
+
+#pf2e-export-scribe-clipboard .fas {
+    margin: 0;
+}

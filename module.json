@@ -1,0 +1,45 @@
+{
+    "id": "pf2e-export-scribe",
+    "name": "pf2e-export-scribe",
+    "title": "Export to scribe.pf2.tools format",
+    "description": "Exports the selected actors' features, feats, items, spells, ...",
+    "authors": [
+        {
+            "name": "bushvin",
+            "url": "https://blog.elaba.net/",
+            "lemmy": "https://lemmy.world/u/bushvin"
+        }
+    ],
+    "url": "This is auto replaced",
+    "license": "https://github.com/bushvin/pf2e-export-scribe/blob/main/LICENSE",
+    "readme": "https://github.com/bushvin/pf2e-export-scribe/blob/main/README.md",
+    "bugs": "https://github.com/bushvin/pf2e-export-scribe/issues/new/choose",
+    "changelog": "https://github.com/bushvin/pf2e-export-scribe/blob/main/CHANGELOG.md",
+    "flags": {
+        "allowBugReporter": true
+    },
+    "version": "0.0.1",
+    "compatibility": {
+        "minimum": "11.315",
+        "verified": "11"
+    },
+    "minimumCoreVersion": "11.315",
+    "compatibleCoreVersion": "11",
+    "scripts": [
+        "scripts/main.js"
+    ],
+    "styles": [
+        "styles/main.css"
+    ],
+    "languages": [
+        {
+            "lang": "en",
+            "name": "English",
+            "path": "languages/en.json"
+        }
+    ],
+    "manifest": "This is auto replaced",
+    "download": "This is auto replaced",
+    "manifestPlusVersion": "1.2.0",
+    "media": []
+}
