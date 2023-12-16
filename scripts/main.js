@@ -50,19 +50,16 @@ class ScribeFormApplication extends FormApplication {
             ui.notifications.info(
                 "PF2e Export to scribe.pf2.tools | Markdown copied to clipboard."
             );
-
 		});
-
     };
 
     copy_to_clipboard = function() {
-        let md = document.getElementById("pf2e-export-scribe-features").innerHTML;
+        let md = decodeURIComponent(document.getElementById("pf2e-export-scribe-features").innerHTML);
         navigator.clipboard.writeText(md);
     };
 
     getData = function() {
         let ancestry = new ScribeAncestry(this.actor.items.filter( i => i.type === 'ancestry')[0]);
-
         this.actor.items.filter(i => i.type === 'heritage')
             .forEach(
                 (a) => {
