@@ -54,7 +54,7 @@ class ScribeFormApplication extends FormApplication {
     };
 
     copy_to_clipboard = function() {
-        let md = decodeURIComponent(document.getElementById("pf2e-export-scribe-features").innerHTML);
+        let md = document.getElementById("pf2e-export-scribe-features").textContent;
         navigator.clipboard.writeText(md);
     };
 
