@@ -1,10 +1,16 @@
 #pf2e-export-scribe-dialog {
     height: 100%;
 }
+#pf2e-export-scribe-dialog input[type=checkbox] {
+    width: 16px;
+    height: 16px;
+    margin: 0 3px;
+}
 #pf2e-export-scribe-features {
     height: 100%;
     width: 100%;
 }
+
 #pf2e-export-scribe-clipboard {
     display: block;
     position: absolute;
@@ -15,7 +21,7 @@
     bottom: 20px;
     border: 1px solid;
     background-image: url(/ui/parchment.jpg);
-  }
+}
 
 #pf2e-export-scribe-clipboard .fas {
     margin: 0;
