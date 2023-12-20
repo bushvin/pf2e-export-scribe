@@ -20,7 +20,7 @@ jobs:
             -H "Content-Type: application/json" \
             -H "Authorization: ${{ secrets.FOUNDRYVTT_RELEASE_TOKEN }}" \
             -d '{
-              "id": "${{ needs.build.outputs.id }}",
+              "id": "pf2e-export-scribe",
               "dry-run": ${{ env.fvtt_dry_run }},
               "release": {
                 "version": "${{ env.systemVersion }}",
