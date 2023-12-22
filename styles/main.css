@@ -1,5 +1,6 @@
 #pf2e-export-scribe-dialog {
     height: 100%;
+    flex-flow: column;
 }
 #pf2e-export-scribe-dialog input[type=checkbox] {
     width: 16px;
