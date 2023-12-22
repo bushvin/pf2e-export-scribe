@@ -98,7 +98,7 @@ class ScribeFormApplication extends FormApplication {
             document.getElementById('pf2e-export-scribe-include-ancestry-features').checked &&
             document.getElementById('pf2e-export-scribe-content-ancestry-features').textContent.replace(/\s+/, '') != ''
         ) {
-            md.push('## Ancestry Features');
+            md.push('## Ancestry Features ((+Ancestry Features))');
             md.push(document.getElementById('pf2e-export-scribe-content-ancestry-features').textContent);
             md.push('');
         }
@@ -120,7 +120,7 @@ class ScribeFormApplication extends FormApplication {
             document.getElementById('pf2e-export-scribe-include-class-features').checked &&
             document.getElementById('pf2e-export-scribe-content-class-features').textContent.replace(/\s+/, '') != ''
         ) {
-            md.push('## Class features');
+            md.push('## Class features ((+Class features))');
             md.push(document.getElementById('pf2e-export-scribe-content-class-features').textContent);
             md.push('');
         }
@@ -128,7 +128,7 @@ class ScribeFormApplication extends FormApplication {
             document.getElementById('pf2e-export-scribe-include-feats').checked &&
             document.getElementById('pf2e-export-scribe-content-feats').textContent.replace(/\s+/, '') != ''
         ) {
-            md.push('# Feats');
+            md.push('# Feats ((Feats))');
             md.push(document.getElementById('pf2e-export-scribe-content-feats').textContent);
             md.push('');
         }
@@ -136,7 +136,7 @@ class ScribeFormApplication extends FormApplication {
             document.getElementById('pf2e-export-scribe-include-spells').checked &&
             document.getElementById('pf2e-export-scribe-content-spells').textContent.replace(/\s+/, '') != ''
         ) {
-            md.push('# Spells');
+            md.push('# Spells ((Spells))');
             md.push(document.getElementById('pf2e-export-scribe-content-spells').textContent);
             md.push('');
         }
@@ -144,7 +144,7 @@ class ScribeFormApplication extends FormApplication {
             document.getElementById('pf2e-export-scribe-include-formulas').checked &&
             document.getElementById('pf2e-export-scribe-content-formulas').textContent.replace(/\s+/, '') != ''
         ) {
-            md.push('# Formulas');
+            md.push('# Formulas ((Formulas))');
             md.push(document.getElementById('pf2e-export-scribe-content-formulas').textContent);
             md.push('');
         }
@@ -164,7 +164,7 @@ class ScribeFormApplication extends FormApplication {
             .filter((i) => i.type === 'feat' && i.system.category === 'ancestryfeature')
             .sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))
             .forEach((a) => {
-                let t = new ScribeFeature(a);
+                let t = new ScribeFeature(a, 2);
                 ancestry_features.push(t.scribify());
             });
 
@@ -189,7 +189,7 @@ class ScribeFormApplication extends FormApplication {
             .filter((i) => i.type === 'feat' && i.system.category === 'classfeature')
             .sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))
             .forEach((a) => {
-                let t = new ScribeFeature(a);
+                let t = new ScribeFeature(a, 2);
                 class_features.push(t.scribify());
             });
 
@@ -202,7 +202,7 @@ class ScribeFormApplication extends FormApplication {
             )
             .sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))
             .forEach((a) => {
-                let t = new ScribeFeat(a);
+                let t = new ScribeFeat(a, 1);
                 feats.push(t.scribify());
             });
 
@@ -211,7 +211,7 @@ class ScribeFormApplication extends FormApplication {
             .filter((i) => i.type === 'spell')
             .sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))
             .forEach((s) => {
-                let t = new ScribeSpell(s);
+                let t = new ScribeSpell(s, 1);
                 spells.push(t.scribify());
             });
         let formulas = [];
@@ -219,7 +219,7 @@ class ScribeFormApplication extends FormApplication {
             .map((i) => fromUuidSync(i.uuid))
             .sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))
             .forEach((f) => {
-                let t = new ScribeFormula(f);
+                let t = new ScribeFormula(f, 1);
                 formulas.push(t.scribify());
             });
 
@@ -244,6 +244,10 @@ class ScribeFormApplication extends FormApplication {
 class ScribeBase {
     constructor(item) {
         this._item = item;
+    }
+
+    _label(label, level) {
+        return '((' + '+'.repeat(level) + label + ' ))';
     }
 
     _cleanup = function (item) {
@@ -284,6 +288,7 @@ class ScribeBase {
                 action = ':a: to :aaa:';
                 break;
             case 'r':
+            case 'reaction':
                 action = ':r:';
                 break;
             case 'f':
@@ -430,7 +435,7 @@ class ScribeHeading extends ScribeBase {
         this._heading_description = heading;
     }
 
-    scribify = function () {
+    scribify() {
         let heading = '';
         switch (this._heading_level) {
             case 1:
@@ -449,41 +454,29 @@ class ScribeHeading extends ScribeBase {
                 `;
         }
         return this._cleanup(heading);
-    };
-}
-
-class ScribeWatermark extends ScribeBase {
-    constructor(watermark) {
-        super();
-        this._watermark = watermark;
     }
-
-    scribify = function () {
-        let watermark = `
-        watermark (
-        ${this._watermark}
-        )
-        `;
-        return this._cleanup(watermark);
-    };
 }
 
 class ScribeItem extends ScribeBase {
-    constructor(item) {
+    constructor(item, label_level = 0) {
         super(item);
-        this._item_title = '';
-        this._item_type = '';
-        this._item_rank = '';
-        this._item_traits = [];
+        this._item_title = this._item.name;
+        this._item_label = this._item.name;
+        this._item_type = this._item.type;
+        this._item_rank = this._item.system.level?.value;
+        this._item_traits = this._item.system.traits?.value.concat([this._item.system.traits?.rarity]) || [];
+        this._item_source = this._item.system.publication.title;
         this._item_description = [];
         this._section = [];
+        this._label_level = label_level;
     }
 
-    _scribify() {
+    scribify() {
         let description = this._item_description.join('\n-\n');
         let traits = this._format_traits(this._item_traits);
+
         let item = 'item(\n';
-        item = item + `# ${this._item_title}\n`;
+        item = item + `# ${this._item_title} ${this._label(this._item_label, this._label_level)}\n`;
         if (this._item_rank !== '') {
             item = item + `## ${this._item_type} ${this._item_rank}\n`;
         } else {
@@ -493,51 +486,42 @@ class ScribeItem extends ScribeBase {
         if (traits !== '') {
             item = item + `; ${traits}\n`;
         }
-        item = item + `${description}\n`;
+        if (this._item_source.trim() != '') {
+            item = item + `**Source** ${this._item_source}\n\n`;
+        }
+        item = item + `${description}\n\n`;
         item = item + ')\n';
         return this._cleanup(item);
-    }
-
-    scribify = function () {
-        this._item_title = this._item.name;
-        this._item_type = this._item.type;
-        this._item_rank = this._item.system.level?.value;
-        this._item_traits = this._item.system.traits?.value.concat([this._item.system.traits?.rarity]) || [];
-        this._item_description.push(this._parse_description(this._item.system.description?.value || ''));
-        return this._scribify();
-    };
-
-    section() {
-        /* Start Section */
-    }
-
-    end_section() {
-        /* end of the section */
     }
 }
 
 class ScribeAncestry extends ScribeBase {
-    constructor(item) {
+    constructor(item, label_level = 0) {
         super(item);
         this._ancestry_title = '';
         this._ancestry_type = 'ancestry';
         this._heritage = [];
         this._ancestry_traits = [];
         this._ancestry_description = [];
+        this._ancestry_title = this._item.name;
+        this._ancestry_traits = this._item.system.traits?.value.concat([this._item.system.traits?.rarity]) || [];
+        this._ancestry_description.push(this._parse_description(this._item.system.description?.value || ''));
+        this._item_label = this._item.name;
+        this._label_level = label_level;
     }
 
     heritage = function (heritage) {
         this._heritage.push(heritage);
     };
 
-    _scribify = function () {
+    scribify() {
         let ret = '';
         let traits = this._ancestry_traits;
         this._heritage.forEach((i) => {
             traits = traits.concat(i.system.traits.value.concat([i.system.traits.rarity]));
         });
         traits = this._format_traits(traits);
-        ret = ret + `# Ancestry: ${this._ancestry_title}\n`;
+        ret = ret + `# Ancestry: ${this._ancestry_title} ${this._label(this._ancestry_title, this._label_level)}\n`;
         ret = ret + `-\n`;
         if (traits !== '') {
             ret = ret + `; ${traits}\n`;
@@ -545,41 +529,34 @@ class ScribeAncestry extends ScribeBase {
         ret = ret + `${this._ancestry_description.join('\n')}`;
         if (this._heritage.length > 0) {
             this._heritage.forEach((i) => {
-                ret = ret + `## Heritage: ${i.name}\n`;
+                ret = ret + `## Heritage: ${i.name}  ${this._label(i.name, this._label_level + 1)}\n`;
                 ret = ret + `${i.system.description.value}\n`;
             });
         }
         return this._cleanup(ret);
-    };
-
-    scribify = function () {
-        this._ancestry_title = this._item.name;
-        this._ancestry_traits = this._item.system.traits?.value.concat([this._item.system.traits?.rarity]) || [];
-        this._ancestry_description.push(this._parse_description(this._item.system.description?.value || ''));
-        return this._scribify();
-    };
+    }
 }
 
 class ScribeBackground extends ScribeItem {
-    scribify = function () {
-        this._item_title = this._item.name;
-        this._item_type = this._item.type;
-        this._item_traits = this._item.system.traits?.value.concat([this._item.system.traits?.rarity]) || [];
+    constructor(item) {
+        super(item);
+        this._item_rank = '';
         this._item_description.push(this._parse_description(this._item.system.description?.value || ''));
-        return this._scribify();
-    };
+    }
 }
 
 class ScribeClass extends ScribeBase {
-    constructor(item) {
+    constructor(item, label_level = 0) {
         super(item);
-        this._class_name = '';
-        this._class_description = '';
+        this._class_name = this._item.name;
+        this._class_label = this._item.name;
+        this._class_description = this._item.system.description?.value;
+        this._label_level = label_level;
     }
 
-    _scribify = function () {
+    scribify() {
         let ret = [];
-        ret.push(`# Class: ${this._class_name}`);
+        ret.push(`# Class: ${this._class_name} ${this._label(this._class_label, this._label_level)}`);
 
         let pre = new RegExp(`<span[^>]+style="float:right"[^>]*>`, 'i');
         let post = new RegExp(`</span>`, 'i');
@@ -599,43 +576,28 @@ class ScribeClass extends ScribeBase {
 
         /* ret.push(this._class_description, 1); */
         return this._cleanup(ret.join('\n'));
-    };
-
-    scribify = function () {
-        this._class_name = this._item.name;
-        /*
-        this._item_type = this._item.type;
-        this._item_rank = this._item.system.level?.value;
-        this._item_traits = this._item.system.traits?.value.concat([this._item.system.traits?.rarity]) || [];
-        */
-        this._class_description = this._item.system.description?.value;
-        return this._scribify();
-    };
+    }
 }
 
 class ScribeFeature extends ScribeItem {
-    scribify = function () {
-        this._item_title = this._item.name;
+    constructor(item, label_level = 0) {
+        super(item, label_level);
         this._item_type = '';
-        if (this._item.system.level?.value > 0) {
-            this._item_rank = this._item.system.level?.value;
+        // this._label_level = label_level;
+
+        if (this._item.system.level?.value == 0) {
+            this._item_rank = '';
         }
-        this._item_traits = this._item.system.traits?.value.concat([this._item.system.traits?.rarity]) || [];
         this._item_description.push(this._parse_description(this._item.system.description?.value || ''));
-        return this._scribify();
-    };
+    }
 }
 
 class ScribeFeat extends ScribeItem {
-    scribify = function () {
+    constructor(item, label_level = 0) {
+        super(item, label_level);
         if (this._item.system.actionType.value === 'reaction') {
-            this._item_title = this._item.name + ' :r:';
-        } else {
-            this._item_title = this._item.name;
+            this._item_title = `${this._item_title} :r:`;
         }
-        this._item_type = this._item.type;
-        this._item_rank = this._item.system.level?.value;
-        this._item_traits = this._item.system.traits?.value.concat([this._item.system.traits?.rarity]) || [];
         let prerequisites = [];
         this._item.system.prerequisites.value.forEach((i) => {
             prerequisites.push(i.value);
@@ -644,20 +606,18 @@ class ScribeFeat extends ScribeItem {
             this._item_description.push(`**Prerequisites** ${prerequisites.join(', ')}`);
         }
         this._item_description.push(this._parse_description(this._item.system.description?.value || ''));
-        return this._scribify();
-    };
+    }
 }
 
 class ScribeSpell extends ScribeItem {
-    scribify = function () {
+    constructor(item, label_level = 0) {
+        super(item, label_level);
         let actions = '';
         let cast = '';
-        if (!isNaN(parseInt(this._item.system.time.value))) {
-            actions = this._format_action(this._item.system.time.value);
-            if (actions === this._item.system.time.value) {
-                cast = `**Cast** ${actions}\n`;
-                actions = '';
-            }
+        actions = this._format_action(this._item.system.time.value);
+        if (actions === this._item.system.time.value) {
+            cast = `**Cast** ${actions}\n`;
+            actions = '';
         }
         this._item_title = `${this._item.name} ${actions}`;
 
@@ -668,9 +628,6 @@ class ScribeSpell extends ScribeItem {
         } else {
             this._item_type = 'spell';
         }
-
-        this._item_rank = this._item.system.level.value;
-        this._item_traits = this._item.system.traits.value.concat([this._item.system.traits.rarity]);
 
         let first = [];
         if (this._item.system.traits.traditions.length > 0) {
@@ -729,15 +686,12 @@ class ScribeSpell extends ScribeItem {
         this._item_description.push(first.join('\n'));
 
         this._item_description.push(this._parse_description(this._item.system.description.value));
-        let trigger = '';
-        return this._scribify();
-        /* return this._scribify(); */
-    };
+    }
 }
 
 class ScribeFormula extends ScribeItem {
-    constructor(item) {
-        super(item);
+    constructor(item, label_level = 0) {
+        super(item, label_level);
         this._formula_cost_table = [
             '5 sp',
             '1 gp',
@@ -761,15 +715,9 @@ class ScribeFormula extends ScribeItem {
             '2,000 gp',
             '3,500 gp',
         ];
-    }
-
-    scribify = function () {
-        this._item_title = this._item.name;
         this._item_rank = this._item.level;
         this._item_type = 'formula';
-        this._item_traits = this._item.system.traits.value.concat([this._item.system.traits.rarity]);
         this._item_description.push(`**Cost** ${this._formula_cost_table[this._item.level]}`);
         this._item_description.push(this._parse_description(this._item.description));
-        return this._scribify();
-    };
+    }
 }
