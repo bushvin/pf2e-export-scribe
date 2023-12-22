@@ -258,12 +258,6 @@ class ScribeBase {
         );
     };
 
-    /*
-    scribify(template) {
-        template = template.split('\n').map(i => i.replace(/^\s+/,'')).join("\n")
-    };
-    */
-
     _ucfirst = function (value) {
         /* Capitalize the given string */
         return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
