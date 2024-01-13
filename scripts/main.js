@@ -32,7 +32,6 @@ class ScribeFormApplication extends FormApplication {
         return mergeObject(super.defaultOptions, {
             template: 'modules/pf2e-export-scribe/templates/dialog.hbs',
             id: 'pf2e-export-scribe',
-            height: (window.innerHeight * 7) / 8,
             width: Math.max(window.innerWidth / 3, 600),
             resizable: true,
             title: game.i18n.localize(`pf2e-export-scribe.dialog.title`),
@@ -44,6 +43,10 @@ class ScribeFormApplication extends FormApplication {
             event.preventDefault();
             this.copy_to_clipboard();
             ui.notifications.info('PF2e Export to scribe.pf2.tools | Markdown copied to clipboard.');
+            ui.notifications.warn(
+                'PF2e Export to scribe.pf2.tools | Please be advised this module is deprecated in favor of <a href="https://foundryvtt.com/packages/actor-export" target="_blank"><code>actor-export</code></a>, which provides the same functionality',
+                { permanent: true }
+            );
         });
         document.getElementById('pf2e-export-scribe-include-ancestry').addEventListener('change', (event) => {
             event.preventDefault();
