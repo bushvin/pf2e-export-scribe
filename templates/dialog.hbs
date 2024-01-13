@@ -1,14 +1,58 @@
-<div id="pf2e-export-scribe-dialog">
-    <div style="height: 200px">
-        <div><input type="checkbox" id="pf2e-export-scribe-include-ancestry" checked /> <label for="pf2e-export-scribe-include-ancestry">Include Ancestry</label></div>
-        <div><input type="checkbox" id="pf2e-export-scribe-include-ancestry-features" checked /> <label for="pf2e-export-scribe-include-ancestry-features">Include Ancestry Features</label></div>
-        <div><input type="checkbox" id="pf2e-export-scribe-include-background" checked /> <label for="pf2e-export-scribe-include-background">Include Background</label></div>
-        <div><input type="checkbox" id="pf2e-export-scribe-include-class" checked /> <label for="pf2e-export-scribe-include-class">Include Class</label></div>
-        <div><input type="checkbox" id="pf2e-export-scribe-include-class-features" checked /> <label for="pf2e-export-scribe-include-class-features">Include Class Features</label></div>
-        <div><input type="checkbox" id="pf2e-export-scribe-include-feats" checked /> <label for="pf2e-export-scribe-include-feats">Include Feats</label></div>
-        <div><input type="checkbox" id="pf2e-export-scribe-include-spells" checked /> <label for="pf2e-export-scribe-include-spells">Include Spells</label></div>
-        <div><input type="checkbox" id="pf2e-export-scribe-include-formulas" checked /> <label for="pf2e-export-scribe-include-formulas">Include Formulas</label></div>
-        <div style="height: 20%;">Copy/Paste this content into <a href="https://scribe.pf2.tools/" target="_blank">https://scribe.pf2.tools/</a></div>
+<form id="pf2e-export-scribe-form">
+    <div>
+        <div class="form-group">
+            <label for="pf2e-export-scribe-include-ancestry">Include Ancestry</label>
+            <div class="form-fields">
+                <input type="checkbox" id="pf2e-export-scribe-include-ancestry" checked />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="pf2e-export-scribe-include-ancestry-features">Include Ancestry Features</label>
+            <div class="form-fields">
+                <input type="checkbox" id="pf2e-export-scribe-include-ancestry-features" checked />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="pf2e-export-scribe-include-background">Include Background</label>
+            <div class="form-fields">
+                <input type="checkbox" id="pf2e-export-scribe-include-background" checked />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="pf2e-export-scribe-include-class">Include Class</label>
+            <div class="form-fields">
+                <input type="checkbox" id="pf2e-export-scribe-include-class" checked />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="pf2e-export-scribe-include-class-features">Include Class Features</label>
+            <div class="form-fields">
+                <input type="checkbox" id="pf2e-export-scribe-include-class-features" checked />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="pf2e-export-scribe-include-feats">Include Feats</label>
+            <div class="form-fields">
+                <input type="checkbox" id="pf2e-export-scribe-include-feats" checked />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="pf2e-export-scribe-include-spells">Include Spells</label>
+            <div class="form-fields">
+                <input type="checkbox" id="pf2e-export-scribe-include-spells" checked />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="pf2e-export-scribe-include-formulas">Include Spells</label>
+            <div class="form-fields">
+                <input type="checkbox" id="pf2e-export-scribe-include-formulas" checked />
+            </div>
+        </div>
+        <hr />
+        <div class="form-group">
+            <label><strong>Please be advised this module is deprectaed in favor of <a href="https://foundryvtt.com/packages/actor-export" target="_blank"><code>actor-export</code></a>, which provides the same functionality</strong></p></label>
+            <p class="notes">Copy/Paste this content into <a href="https://scribe.pf2.tools/" target="_blank">https://scribe.pf2.tools/</a></p>
+        </div>
         <div style="display: none;">
             <textarea id="pf2e-export-scribe-content-ancestry">{{ ancestry }}</textarea>
             <textarea id="pf2e-export-scribe-content-ancestry-features">{{ ancestry_features }}</textarea>
@@ -20,10 +64,12 @@
             <textarea id="pf2e-export-scribe-content-formulas">{{ formulas }}</textarea>
         </div>
     </div>
-    <div style="height: calc(100% - 200px);">
+    <div class="form-group" style="height: 200px;">
         <textarea id="pf2e-export-scribe-features" style="height: 100%"></textarea>
     </div>
-    <button id="pf2e-export-scribe-clipboard">
-        <i class="fas fa-clipboard"></i>
-    </button>
-</div>
+    <div class="form-group buttons">
+        <button id="pf2e-export-scribe-clipboard">
+            <i class="fas fa-clipboard"></i>
+        </button>
+    </div>
+</form>
