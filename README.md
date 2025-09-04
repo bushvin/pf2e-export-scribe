@@ -1,5 +1,7 @@
 # Export resources to scribe.pf2.tools markdown
 
+**This module is no longer maintained on github. Please visit [https://codeberg.org/bushvin/pf2e-export-scribe](https://codeberg.org/bushvin/pf2e-export-scribe)**
+
 ![badge_version] ![badge_issues] ![badge_downloads]
 
 ![badge_fvtt_versions] ![badge_pf2e_module_version]
